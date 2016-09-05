@@ -9,10 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.alenbeyond.sujin.R;
 import com.alenbeyond.sujin.utils.NetUtils;
 import com.alenbeyond.sujin.utils.UiUtils;
+
 /**
  * Created by AlenBeyond on 2016/5/23.
  */
@@ -39,12 +41,15 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     /**
      * 初始化ToolBar
+     *
      * @param title
      * @param isBack
      */
     public void initToolBar(String title, boolean isBack) {
         Toolbar toolbar = findView(R.id.toolbar);
-        toolbar.setTitle(title);
+        toolbar.setTitle("");
+        TextView tvTitle = (TextView) findViewById(R.id.tv_toolbar_title);
+        tvTitle.setText(title);
         setSupportActionBar(toolbar);
         if (isBack) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -70,6 +75,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     public interface OnClickBackListener {
         void onClickBackListener();
     }
+
     /**
      * 设置返回按钮的事件监听
      *

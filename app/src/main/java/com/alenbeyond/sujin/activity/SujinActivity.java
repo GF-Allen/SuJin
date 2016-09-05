@@ -1,26 +1,26 @@
 package com.alenbeyond.sujin.activity;
 
+import android.graphics.Typeface;
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alenbeyond.sujin.R;
+import com.alenbeyond.sujin.adapter.VpImageAdapter;
 import com.alenbeyond.sujin.bean.SuJinDes;
 import com.alenbeyond.sujin.rx.ApiManager;
 import com.alenbeyond.sujin.rx.MyObserver;
-import com.bumptech.glide.Glide;
+import com.dd.CircularProgressButton;
 
 import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SujinActivity extends AppCompatActivity {
+public class SujinActivity extends BaseActivity {
 
     @BindView(R.id.tv_des)
     TextView tvDes;
@@ -28,19 +28,36 @@ public class SujinActivity extends AppCompatActivity {
     TextView tvTitle;
     @BindView(R.id.tv_stuff)
     TextView tvStuff;
-    @BindView(R.id.iv_image)
-    ImageView ivImage;
+    @BindView(R.id.vp_image)
+    ViewPager vpImage;
+    @BindView(R.id.btnWithText)
+    CircularProgressButton btnWithText;
+
+    private VpImageAdapter adapter;
     private MediaPlayer player;
+    private String url;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initWidget() {
         setContentView(R.layout.activity_sujin);
         ButterKnife.bind(this);
+        initToolBar("素锦", false);
+        btnWithText.setIndeterminateProgressMode(true);
+        btnWithText.setProgress(50);
         player = new MediaPlayer();
-        String url = getIntent().getStringExtra("url");
+        url = getIntent().getStringExtra("url");
         tvDes.setMovementMethod(ScrollingMovementMethod.getInstance());
+
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/PingFang_SC_Light.ttf");
+        tvTitle.setTypeface(typeface);
+        tvStuff.setTypeface(typeface);
+        tvDes.setTypeface(typeface);
+    }
+
+    @Override
+    protected void loadData() {
         ApiManager.getObSujinDes(url, new MyObserver<SuJinDes>() {
+
             @Override
             public void onNext(SuJinDes suJinDes) {
                 String content = suJinDes.getContent();
@@ -51,11 +68,12 @@ public class SujinActivity extends AppCompatActivity {
                     player.setDataSource(suJinDes.getMusic());
                     player.prepare();
                     player.start();
+                    btnWithText.setProgress(100);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                Glide.with(SujinActivity.this).load(suJinDes.getImages().get(0))
-                        .asBitmap().centerCrop().into(ivImage);
+                adapter = new VpImageAdapter(SujinActivity.this, suJinDes.getImages());
+                vpImage.setAdapter(adapter);
             }
         });
     }
@@ -63,8 +81,10 @@ public class SujinActivity extends AppCompatActivity {
     public void startPlay(View view) {
         if (player.isPlaying()) {
             player.pause();
+            btnWithText.setProgress(0);
         } else {
             player.start();
+            btnWithText.setProgress(100);
         }
 
     }

@@ -8,9 +8,9 @@ android {
     defaultConfig {
         applicationId "com.alenbeyond.sujin"
         minSdkVersion 15
-        targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 22
+        versionCode 10
+        versionName "16.1.9.6"
     }
     buildTypes {
         release {
@@ -31,4 +31,5 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.2.1'
     apt 'com.jakewharton:butterknife-compiler:8.2.1'
     compile 'com.orhanobut:logger:1.15'
+    compile 'com.github.dmytrodanylyk.circular-progress-button:library:1.1.3'
 }

@@ -22,7 +22,11 @@ public class SplashActivity extends BaseActivity {
 
     @BindView(R.id.tv_name)
     TextView tvName;
-    private static final long TIME_OUT = 2000;
+    @BindView(R.id.tv_motto1)
+    TextView tvMotto1;
+    @BindView(R.id.tv_motto2)
+    TextView tvMotto2;
+    private static final long TIME_OUT = 3000;
 
     @Override
     public void initWidget() {
@@ -30,6 +34,8 @@ public class SplashActivity extends BaseActivity {
         ButterKnife.bind(this);
         Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/PingFang_SC_Light.ttf");
         tvName.setTypeface(typeface);
+        tvMotto1.setTypeface(typeface);
+        tvMotto2.setTypeface(typeface);
     }
 
     @Override

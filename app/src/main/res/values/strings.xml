@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">素锦</string>
-    <string name="motto">这个世界上每个角落都有人过着相似的人生</string>
+    <string name="motto1">这世界上每个角落</string>
+    <string name="motto2">都有人过着相似的人生</string>
 </resources>
