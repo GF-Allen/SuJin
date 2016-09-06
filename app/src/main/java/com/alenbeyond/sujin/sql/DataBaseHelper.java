@@ -22,7 +22,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     private Dao<SuJinHome, Integer> homeDao;
 
     private DataBaseHelper(Context context) {
-        super(context, DB_NAME, null, 5);
+        super(context, DB_NAME, null, 6);
     }
 
     /**
@@ -45,7 +45,7 @@ public class DataBaseHelper extends OrmLiteSqliteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase, ConnectionSource connectionSource) {
         try {
-            TableUtils.clearTable(connectionSource, SuJinHome.class);
+            TableUtils.createTable(connectionSource, SuJinHome.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }

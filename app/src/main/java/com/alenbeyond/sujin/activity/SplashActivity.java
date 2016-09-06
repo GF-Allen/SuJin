@@ -7,13 +7,6 @@ import android.os.SystemClock;
 import android.widget.TextView;
 
 import com.alenbeyond.sujin.R;
-import com.alenbeyond.sujin.bean.SuJinHome;
-import com.alenbeyond.sujin.rx.ApiManager;
-import com.alenbeyond.sujin.rx.MyObserver;
-import com.alenbeyond.sujin.sql.DataBaseHelper;
-
-import java.sql.SQLException;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +25,7 @@ public class SplashActivity extends BaseActivity {
     public void initWidget() {
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/PingFang_SC_Light.ttf");
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "fonts/PingFang_SC_Regular.ttf");
         tvName.setTypeface(typeface);
         tvMotto1.setTypeface(typeface);
         tvMotto2.setTypeface(typeface);
@@ -65,16 +58,24 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        ApiManager.getObSujinHome(0, new MyObserver<List<SuJinHome>>() {
-            @Override
-            public void onNext(List<SuJinHome> suJinHomes) {
-                DataBaseHelper helper = DataBaseHelper.getHelper(SplashActivity.this);
-                try {
-                    helper.getHomeDao().create(suJinHomes);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+//        try {
+//            List<SuJinHome> suJinHomes = DataBaseHelper.getHelper(this).getHomeDao().queryForAll();
+//            if (suJinHomes != null) {
+//                return;
+//            }
+//            ApiManager.getObSujinHome(0, new MyObserver<List<SuJinHome>>() {
+//                @Override
+//                public void onNext(List<SuJinHome> suJinHomes) {
+//                    DataBaseHelper helper = DataBaseHelper.getHelper(SplashActivity.this);
+//                    try {
+//                        helper.getHomeDao().create(suJinHomes);
+//                    } catch (SQLException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            });
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
     }
 }

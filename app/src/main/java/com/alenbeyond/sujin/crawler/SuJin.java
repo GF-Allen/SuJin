@@ -23,7 +23,11 @@ public class SuJin {
         List<SuJinHome> datas = new ArrayList<>();
 
         try {
-            Document doc = Jsoup.connect(ROOT_URL + "page/" + page).get();
+            Document doc = Jsoup
+                    .connect(ROOT_URL + "page/" + page)
+                    .userAgent("User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)")
+                    .timeout(10000)
+                    .get();
             Elements posts = doc.getElementsByClass("post");
             for (Element post : posts) {
                 Element cover = post.getElementsByClass("cover").get(0);
@@ -59,7 +63,11 @@ public class SuJin {
     public static SuJinDes getSujinDes(String url) {
 
         try {
-            Document doc = Jsoup.connect(url).get();
+            Document doc = Jsoup
+                    .connect(url)
+                    .userAgent("User-Agent: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1; 360SE)")
+                    .timeout(10000)
+                    .get();
             String title = doc.getElementsByClass("title").text();
             String stuff = doc.select("div.stuff span").get(0).text();
             String html = doc.getElementsByClass("content").get(0).getElementsByTag("p").html();
