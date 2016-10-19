@@ -101,16 +101,17 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-        try {
-            List<SuJinHome> dbDatas = homeDao.queryForAll();
-            if (dbDatas.size() == 0) {
-                loadDataByOnline(page);
-            } else {
-                setData(dbDatas);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            List<SuJinHome> dbDatas = homeDao.queryForAll();
+//            if (dbDatas.size() == 0) {
+//                loadDataByOnline(page);
+//            } else {
+//                setData(dbDatas);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        loadDataByOnline(page);
 
     }
 
