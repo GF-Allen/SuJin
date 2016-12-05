@@ -57,11 +57,45 @@
             <!--android:layout_marginTop="10dp"-->
             <!--android:scaleType="centerCrop" />-->
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/vp_image"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="10dp">
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/vp_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="15dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/ll_points"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:orientation="horizontal">
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/view_point"
+                        android:layout_width="5dp"
+                        android:layout_height="5dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/shape_white_point"
+                        android:paddingLeft="5dp" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/tv_des"

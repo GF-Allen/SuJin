@@ -5,6 +5,8 @@ import android.support.v4.view.ViewPager;
 import android.text.Html;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alenbeyond.sujin.R;
@@ -14,6 +16,7 @@ import com.alenbeyond.sujin.rx.ApiManager;
 import com.alenbeyond.sujin.rx.MyObserver;
 import com.alenbeyond.sujin.service.PlayerService;
 import com.alenbeyond.sujin.utils.NetUtils;
+import com.alenbeyond.sujin.utils.UiUtils;
 import com.dd.CircularProgressButton;
 
 import butterknife.BindView;
@@ -32,10 +35,16 @@ public class SujinActivity extends BaseActivity {
     ViewPager vpImage;
     @BindView(R.id.btnWithText)
     CircularProgressButton btnWithText;
+    @BindView(R.id.view_point)
+    View point;
+    @BindView(R.id.ll_points)
+    LinearLayout llPoints;
 
     private VpImageAdapter adapter;
     private String url;
     private String musicUrl;
+
+    private int mInterval;
 
     @Override
     public void initWidget() {
@@ -43,6 +52,7 @@ public class SujinActivity extends BaseActivity {
         ButterKnife.bind(this);
         String title = getIntent().getStringExtra("title");
         initToolBar(title, true);
+        mInterval = UiUtils.dip2px(this, 5);
         btnWithText.setIndeterminateProgressMode(true);
         btnWithText.setProgress(50);
         url = getIntent().getStringExtra("url");
@@ -52,6 +62,27 @@ public class SujinActivity extends BaseActivity {
         tvTitle.setTypeface(typeface);
         tvStuff.setTypeface(typeface);
         tvDes.setTypeface(typeface);
+
+
+        final RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) point.getLayoutParams();
+        vpImage.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                params.leftMargin = (int) (mInterval + position * mInterval * 3 + mInterval * 3 * positionOffset);
+                point.setLayoutParams(params);
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override
@@ -73,6 +104,15 @@ public class SujinActivity extends BaseActivity {
                 }
                 adapter = new VpImageAdapter(SujinActivity.this, suJinDes.getImages());
                 vpImage.setAdapter(adapter);
+                for (int i = 0; i < suJinDes.getImages().size(); i++) {
+                    View view = new View(SujinActivity.this);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(mInterval, mInterval);
+                    params.leftMargin = mInterval;
+                    params.rightMargin = mInterval;
+                    view.setLayoutParams(params);
+                    view.setBackgroundResource(R.drawable.shape_point);
+                    llPoints.addView(view);
+                }
             }
         });
     }
