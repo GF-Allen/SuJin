@@ -13,10 +13,12 @@ import com.alenbeyond.sujin.bean.SuJinDes;
 import com.alenbeyond.sujin.rx.ApiManager;
 import com.alenbeyond.sujin.rx.MyObserver;
 import com.alenbeyond.sujin.service.PlayerService;
+import com.alenbeyond.sujin.utils.NetUtils;
 import com.dd.CircularProgressButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.internal.Utils;
 
 public class SujinActivity extends BaseActivity {
 
@@ -39,7 +41,8 @@ public class SujinActivity extends BaseActivity {
     public void initWidget() {
         setContentView(R.layout.activity_sujin);
         ButterKnife.bind(this);
-        initToolBar("素锦", false);
+        String title = getIntent().getStringExtra("title");
+        initToolBar(title, true);
         btnWithText.setIndeterminateProgressMode(true);
         btnWithText.setProgress(50);
         url = getIntent().getStringExtra("url");
@@ -62,8 +65,12 @@ public class SujinActivity extends BaseActivity {
                 tvStuff.setText(suJinDes.getStuff());
                 tvTitle.setText(suJinDes.getTitle());
                 musicUrl = suJinDes.getMusic();
-                PlayerService.play(SujinActivity.this, musicUrl);
-                btnWithText.setProgress(100);
+                if (NetUtils.isWifi(SujinActivity.this)) {
+                    PlayerService.play(SujinActivity.this, musicUrl);
+                    btnWithText.setProgress(100);
+                } else {
+                    btnWithText.setProgress(0);
+                }
                 adapter = new VpImageAdapter(SujinActivity.this, suJinDes.getImages());
                 vpImage.setAdapter(adapter);
             }

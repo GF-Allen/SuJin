@@ -51,7 +51,8 @@ public class VpHomeAdapter extends PagerAdapter {
             @Override
             public void onClick(View view) {
                 context.startActivity(new Intent(context, SujinActivity.class)
-                        .putExtra("url",datas.get(position).getUrl()));
+                        .putExtra("url",datas.get(position).getUrl())
+                        .putExtra("title",datas.get(position).getTitle()));
             }
         });
         ImageView ivImage = (ImageView) view.findViewById(R.id.iv_image);

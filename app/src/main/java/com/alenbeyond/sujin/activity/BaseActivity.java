@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alenbeyond.sujin.R;
@@ -49,10 +51,17 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         Toolbar toolbar = findView(R.id.toolbar);
         toolbar.setTitle("");
         TextView tvTitle = (TextView) findViewById(R.id.tv_toolbar_title);
+        ImageButton btnBack = (ImageButton) findViewById(R.id.btn_back);
         tvTitle.setText(title);
         setSupportActionBar(toolbar);
         if (isBack) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            btnBack.setVisibility(View.VISIBLE);
+            btnBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
         }
     }
 

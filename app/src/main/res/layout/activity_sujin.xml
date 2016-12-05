@@ -38,7 +38,8 @@
                 android:layout_height="wrap_content"
                 android:scrollbars="vertical"
                 android:textColor="#444444"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_stuff"
@@ -67,6 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
+                android:lineSpacingExtra="7dp"
                 android:textColor="#444444"
                 android:textSize="14sp" />
 

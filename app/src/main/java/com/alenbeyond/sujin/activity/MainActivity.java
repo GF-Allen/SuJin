@@ -89,7 +89,7 @@ public class MainActivity extends BaseActivity {
                             Logger.d(startX + ":" + endX + ":" + d);
                             if (Math.abs(d) > 10 && d < 0) {
                                 page++;
-                                loadDataByOnline(page);
+                                loadDataByOnline(page, false);
                             }
                             break;
                     }
@@ -101,29 +101,29 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void loadData() {
-//        try {
-//            List<SuJinHome> dbDatas = homeDao.queryForAll();
-//            if (dbDatas.size() == 0) {
-//                loadDataByOnline(page);
-//            } else {
-//                setData(dbDatas);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-        loadDataByOnline(page);
+        loadDataByOnline(page, true);
+        try {
+            List<SuJinHome> dbDatas = homeDao.queryForAll();
+            setData(dbDatas);
+            homeDao.delete(dbDatas);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
     }
 
     private boolean isLoading = false;
 
-    private void loadDataByOnline(int page) {
+    private void loadDataByOnline(int page, final boolean isFirst) {
         showContent(false);
         isLoading = true;
         ApiManager.getObSujinHome(page, new MyObserver<List<SuJinHome>>() {
             @Override
             public void onNext(List<SuJinHome> suJinHomes) {
                 try {
+                    if (isFirst) {
+                        datas.clear();
+                    }
                     setData(suJinHomes);
                     homeDao.create(suJinHomes);
                 } catch (SQLException e) {
@@ -143,7 +143,7 @@ public class MainActivity extends BaseActivity {
                 @Override
                 public void onClick(View view) {
                     mSrlFresh.setRefreshing(true);
-                    loadDataByOnline(page);
+                    loadDataByOnline(page, false);
                 }
             }).setActionTextColor(getResources().getColor(R.color.colorAccent)).show();
         } else {

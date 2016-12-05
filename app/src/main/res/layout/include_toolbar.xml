@@ -16,12 +16,26 @@
             android:background="@color/white"
             app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay" />
 
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/ic_back"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_toolbar_title"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="素锦"
+            android:ellipsize="marquee"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:singleLine="true"
             android:textColor="#444444"
             android:textSize="18sp" />
 
